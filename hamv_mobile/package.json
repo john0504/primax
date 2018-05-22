@@ -115,7 +115,7 @@
             "cordova-plugin-device": {},
             "cordova-plugin-email-composer": {},
             "cordova-plugin-facebook4": {
-                "APP_ID": "MY_APP_ID",
+                "APP_ID": "myAppId",
                 "APP_NAME": "Smart Light"
             },
             "cordova-plugin-hockeyapp": {},

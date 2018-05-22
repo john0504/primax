@@ -90,7 +90,7 @@
     <plugin name="cordova-plugin-device" spec="^1.1.7" />
     <plugin name="cordova-plugin-email-composer" spec="^0.8.15" />
     <plugin name="cordova-plugin-facebook4" spec="^1.9.1">
-        <variable name="APP_ID" value="MY_APP_ID" />
+        <variable name="APP_ID" value="myAppId" />
         <variable name="APP_NAME" value="Smart Light" />
     </plugin>
     <plugin name="cordova-plugin-geolocation" spec="^4.0.1">
