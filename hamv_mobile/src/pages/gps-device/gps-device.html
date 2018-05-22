@@ -1,0 +1,67 @@
+<ion-header no-border>
+  <ion-toolbar color="white">
+    <ion-title>{{ 'SSID_CONFIRM.ADD_PRODUCT' | translate: { productName: themeService.productName } }}</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="closePage()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <form #ssidForm="ngForm" novalidate (ngSubmit)="onNext()" class="container">
+    <ion-list class="main">
+      <h1 align="center">{{ 'SSID_CONFIRM.SET_WIFI' | translate }}</h1>
+      <img class="hint" src="assets/img/device_graphic.png">
+      <p align="center">{{ 'SSID_CONFIRM.NETWORK_INFO' | translate }}</p>
+      <ion-item color="lightGrey" *ngIf="useText">
+        <ion-label floating color="primary">SSID</ion-label>
+        <ion-input [(ngModel)]="wifiAp.ssid" name="ssid" type="text" #ssid="ngModel" myTabIndex="1">
+        </ion-input>
+      </ion-item>
+      <ion-item color="lightGrey" *ngIf="!useText">
+        <ion-label stacked color="darkGrey">SSID</ion-label>
+        <ion-select [(ngModel)]="selectAp" name="ssidSelect" #ssidSelect="ngModel" placeholder="{{ ('SSID_CONFIRM.CHOOSE' | translate) }}" (ngModelChange)="wifiApSelected()"
+          (ionFocus)="isSelectFocus = true;" (ionBlur)="isSelectFocus = false;" [compareWith]="compareFn" cancelText="{{ 'SSID_CONFIRM.CANCEL' | translate }}" okText="{{ 'SSID_CONFIRM.OK' | translate }}">
+          <ion-option *ngFor="let ap of wifiAps" [value]="ap">{{ ap.ssid }}</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item color="lightGrey" *ngIf="needPassword()" class="input-with-eye-toggle">
+        <ion-label floating color="darkGrey">{{ 'SSID_CONFIRM.PASSWORD' | translate }}</ion-label>
+        <ion-input [(ngModel)]="wifiAp.password" name="password" [type]="inputType" #password="ngModel" myTabIndex="2" clearOnEdit="false">
+        </ion-input>
+        <button (click)="onShowHidePassword()" ion-button icon-only clear item-right type="button">
+          <ion-icon [name]="iconName" color="dark"></ion-icon>
+        </button>
+      </ion-item>
+      <ion-item color="lightGrey" *ngIf="useText">
+        <ion-label floating color="darkGrey">{{ 'SSID_CONFIRM.SECURITY' | translate }}</ion-label>
+        <ion-select [(ngModel)]="wifiAp.sec" (ngModelChange)="clearPassword()" name="security" #security="ngModel" cancelText="{{ 'SSID_CONFIRM.CANCEL' | translate }}" okText="{{ 'SSID_CONFIRM.OK' | translate }}">
+          <ion-option value="wpa2" selected="true">WPA2</ion-option>
+          <ion-option value="wpa">WPA</ion-option>
+          <ion-option value="wep">WEP</ion-option>
+          <ion-option value="open">OPEN</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item color="lightGrey">
+        <ion-label color="primary">
+          <p>
+            <b>{{ 'SSID_CONFIRM.MANUALLY_SET' | translate }}</b>
+          </p>
+        </ion-label>
+        <ion-toggle color="primary" item-right [(ngModel)]="useText" name="inputToggle" #inputToggle="ngModel" (ngModelChange)="clearSSID()"></ion-toggle>
+      </ion-item>
+    </ion-list>
+    <div>
+      <button ion-button color="primary" class="bottom-button full-button" type="submit" full [disabled]="!isValid()">{{ 'SSID_CONFIRM.START_CONNECTION' | translate }}</button>
+    </div>
+    <div>
+      <div>{{vendorVer}}</div>
+      <div>{{vendorName}}</div>
+      <div>{{semiVer}}</div>
+      <div>{{latitude}}</div>
+      <div>{{longitude}}</div>
+    </div>
+  </form>
+  <extra-page-space></extra-page-space>
+</ion-content>

@@ -1,0 +1,22 @@
+simple-barchart {
+  $font-bold: 900;
+  $font-title: 1.3rem;
+
+  .basic-text {
+    font-size: $font-title + 0.4rem;
+    font-weight: $font-bold;
+    margin-right: 8px;
+  }
+
+  .main-block {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+
+    .title-text {
+      font-size: $font-title;
+      font-weight: $font-bold;
+    }
+  }
+}

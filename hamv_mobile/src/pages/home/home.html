@@ -1,0 +1,40 @@
+<ion-header no-border>
+  <ion-navbar color="primary">
+    <ion-buttons left>
+      <button ion-button icon-only menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+    </ion-buttons>
+    <img class="center-logo" [src]="themeService.navbarLogoUrl" [ngClass]="{'center-logo-ios': isIOS() }">
+    <ion-buttons right>
+      <button ion-button icon-only (click)="goAddDevice()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <ng-container ion-fixed>
+    <div *ngIf="!ready; else showDevices" class="empty" padding>
+      <ion-spinner color="primary"></ion-spinner>
+    </div>
+    <ng-template #showDevices>
+      <div class="main-content" *ngIf="!groupsList || groupsList.length === 0; else showTabs">
+        <my-devices></my-devices>
+      </div>
+      <ng-template #showTabs>
+        <scrollable-tabs [tabs]="tabs" (tabSelected)="tabSelected($event)"></scrollable-tabs>
+        <div class="main-content">
+          <my-devices *ngIf="!selectedGroup"></my-devices>
+          <group-item *ngIf="selectedGroup" [group]="selectedGroup">
+            <ng-container *ngIf="selectedGroup?.devices.length > 1">
+              <group-control-panel [group]="selectedGroup" [expand]="true"></group-control-panel>
+              <div class="devices-in-groups">{{ 'HOME.DEVICES_IN_GROUP' | translate }}</div>
+            </ng-container>
+          </group-item>
+        </div>
+      </ng-template>
+    </ng-template>
+  </ng-container>
+</ion-content>
+<div *ngIf="!isLoggedIn" class="init-mask"></div>

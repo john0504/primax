@@ -1,0 +1,170 @@
+---
+familyName: TlgBox
+familyMembers:
+ - TlgBox.*
+controlLayout:
+  primary:  
+  - WATER_DETECT
+  - WATER_DETECT_PRESET
+  - LIGHT_SENSOR
+  - LIGHT_SENSOR_LEVEL
+  - DOOR_MOVE_DETECT
+  secondary:
+  - DOOR_G_SENSOR_PRESET
+  - DOOR_MOVE_RANGE
+scheduleLayout:
+  primary:
+  - WATER_DETECT
+deviceId: 100
+components:
+  WATER_DETECT:
+    type: text
+    title: Water Detect
+    models:
+    - key: H72
+      values:
+      - value: 0
+        text: DISABLE
+      - value: 1
+        text: ENABLE
+      options: 
+        fontColor: '#f53d3d'
+        threshold: 1
+  WATER_DETECT_PRESET:
+    type: toggle
+    title: Water Detect Calibration
+    models:
+    - key: H73
+      values:
+      - value: 0
+        text: ''
+      - value: 1
+        text: Writing
+  LIGHT_SENSOR:
+    type: toggle
+    title: Light Sensor Power
+    models:
+    - key: H68
+      values:
+      - value: 0
+        text: 'OFF'
+      - value: 1
+        text: 'ON'
+  LIGHT_SENSOR_VALUE:
+    type: text
+    title: Light Sensor Value
+    models:
+    - key: H60
+      values:
+        func: text
+  LIGHT_SENSOR_LEVEL:
+    type: range
+    title: Light Sensor Level
+    models:
+    - key: H62
+      values:
+        min: 0
+        max: 5
+        step: 1
+        func: text
+  DOOR_HIT_DETECT:
+    type: toggle
+    title: Door Hit Detect
+    models:
+    - key: H64
+      values:
+      - value: 0
+        text: DISABLE
+      - value: 1
+        text: ENABLE
+      options: 
+        fontColor: '#f53d3d'
+        threshold: 1
+  DOOR_MOVE_DETECT:
+    type: text
+    title: Door Move Detect
+    models:
+    - key: H71
+      values:
+      - value: 0
+        text: DISABLE
+      - value: 1
+        text: ENABLE
+      options: 
+        fontColor: '#f53d3d'
+        threshold: 1
+  DOOR_TYPE_SETTING:
+    type: button-group
+    title: Door Type Setting
+    models:
+    - key: H70
+      values:
+      - value: 1
+        text: "Model A : Up & Down"
+        icon: up-down-arrow
+      - value: 2
+        text: "Model B : Left & Right"
+        icon: left-right-arrow
+      - value: 3
+        text: "Model C : Front & Back"
+        icon: front-back-arrow
+      disable:
+      - conditions:
+        - key: H65
+          op: eq
+          target: 1
+  DOOR_G_SENSOR_PRESET:
+    type: toggle
+    title: G-Sensor Calibration
+    models:
+    - key: H65
+      values:
+      - value: 0
+        text: ''
+      - value: 1
+        text: Writing
+  DOOR_HIT_RANGE:
+    type: range
+    title: Hit Range
+    models:
+    - key: H68
+      values:
+        min: 0
+        max: 9
+        step: 1
+        func: text
+  DOOR_MOVE_RANGE:
+    type: range
+    title: Move Range
+    models:
+    - key: H69
+      values:
+        min: 1
+        max: 9
+        step: 1
+        func: text
+      disable:
+      - conditions:
+        - key: H69
+          op: eq
+          target: 0
+  DOOR_HIT_TIME_VALUE:
+    type: range
+    title: Hit Time Value 
+    models:
+    - key: H66
+      values:
+        min: 0
+        max: 9
+        step: 1
+        func: text
+  DOOR_MOVE_TIME_VALUE:
+    type: range
+    title: Move Time Value
+    models:
+    - key: H67
+      values:
+        min: 0
+        max: 9
+        step: 1
+        func: text
