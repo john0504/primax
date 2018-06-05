@@ -127,6 +127,62 @@ export const functionMap = {
           text: round(val, 2) + '',
       };
   },
+  red_light: (val) => {
+      if (val === undefined || val === null || val === -32767) {
+          return {
+              value: val,
+              text: '--',
+              icon: 'red-light'
+          };
+      }
+      return {
+          value: val,
+          text: round(val, 2) + '',
+          icon: 'red-light'
+      };
+  },
+  green_light: (val) => {
+      if (val === undefined || val === null || val === -32767) {
+          return {
+              value: val,
+              text: '--',
+              icon: 'green-light'
+          };
+      }
+      return {
+          value: val,
+          text: round(val, 2) + '',
+          icon: 'green-light'
+      };
+  },
+  blue_light: (val) => {
+      if (val === undefined || val === null || val === -32767) {
+          return {
+              value: val,
+              text: '--',
+              icon: 'blue-light'
+          };
+      }
+      return {
+          value: val,
+          text: round(val, 2) + '',
+          icon: 'blue-light'
+      };
+  },
+  white_light: (val) => {
+      if (val === undefined || val === null || val === -32767) {
+          return {
+              value: val,
+              text: '--',
+              icon: 'white-light'
+          };
+      }
+      return {
+          value: val,
+          text: round(val, 2) + '',
+          icon: 'white-light'
+      };
+  },
   airbox_humi: (val) => {
       if (val === -32767) {
           return {

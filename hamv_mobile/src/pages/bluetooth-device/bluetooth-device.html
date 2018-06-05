@@ -6,6 +6,11 @@
       </button>
     </ion-buttons>
     <ion-title>{{ 'BLUETOOTH.BLUETOOTH_MODE' | translate }}</ion-title>
+    <ion-buttons right>
+      <button ion-button icon-only (click)="refreshData()">
+        <ion-icon name="refresh"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 <ion-content>

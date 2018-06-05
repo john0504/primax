@@ -1,6 +1,7 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
 
-import { IonicPage, NavController, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, Platform, ViewController } from 'ionic-angular';
+import { Insomnia } from '@ionic-native/insomnia';
 import { BLE } from '@ionic-native/ble';
 import { Subscription } from 'rxjs/Subscription';
 import { defer } from 'rxjs/observable/defer';
@@ -47,12 +48,18 @@ export class BluetoothDevicePage {
     private storage: Storage,
     public checkNetworkService: CheckNetworkService,
     public cd: ChangeDetectorRef,
+    private platform: Platform,
+    private insomnia: Insomnia,
   ) {
     this.subs = [];
   }
 
   ionViewDidLoad() {
     this.checkNetworkService.pause();
+    this.platform.ready()
+    .then(() => {
+      return this.insomnia.keepAwake();
+    });
   }
 
   ionViewDidEnter() {
@@ -77,6 +84,7 @@ export class BluetoothDevicePage {
 
   ionViewWillUnload() {
     this.checkNetworkService.resume();
+    this.insomnia.allowSleepAgain();
   }
 
   private loadStorage() {
@@ -106,6 +114,15 @@ export class BluetoothDevicePage {
           this.viewCtrl.dismiss();
         });
       }
+    });
+  }
+
+  refreshData() {
+    this._deviceList.forEach((deviceItem) => {
+      this.subs.push(
+        defer(() => this.pollingService(deviceItem))
+          .subscribe()
+      );
     });
   }
 
@@ -257,7 +274,9 @@ export class BluetoothDevicePage {
       this.stringToBytes(string))
       .then((data) => {
         this.printLog(deviceItem.deviceName, "response", JSON.stringify(data));
-        deviceItem.connectCount = 0;
+        if (deviceItem.model != "TlgBox") {
+          deviceItem.connectCount = 0;
+        }
         this.cd.detectChanges();
       }, (error) => {
         this.printLog(deviceItem.deviceName, "writeError", JSON.stringify(error));
@@ -347,6 +366,10 @@ export class BluetoothDevicePage {
           let jsonObj;
           try {
             jsonObj = JSON.parse(message);
+            if (jsonObj.online == 1) {
+              this.printLog(deviceItem.deviceName, "message", message);
+              deviceItem.connectCount = 0;
+            }
             switch (jsonObj.response) {
               case "info":
                 sub.unsubscribe();

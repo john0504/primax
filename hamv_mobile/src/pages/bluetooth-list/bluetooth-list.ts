@@ -22,7 +22,9 @@ export class BluetoothListPage {
   private connectDevices = [];
   private isClosePage = false;
   private scanTime = 0;
+  private isShowLog = 0;
   appConfig;
+  logs = [];
 
   constructor(
     public viewCtrl: ViewController,
@@ -70,6 +72,13 @@ export class BluetoothListPage {
   }
 
   private loadStorage() {
+    this.storage.get('isShowLog').then((isShowLog) => {
+      if (isShowLog) {
+        this.isShowLog = isShowLog;
+      } else {
+        this.isShowLog = 0;
+      }
+    });
     this.storage.get('scanTime').then((scanTime) => {
       if (scanTime) {
         this.scanTime = scanTime;
@@ -78,6 +87,17 @@ export class BluetoothListPage {
       }
       this.startScanning();
     });
+  }  
+
+  private printLog(deviceName, title, msg) {
+    const currentDate: Date = new Date();
+    console.log(deviceName + ' ' + title, msg);
+    this.logs.reverse();
+    this.logs.push('[' + currentDate + ']' + deviceName + ' ' + title + "=>" + msg);
+    this.logs.reverse();
+    if (this.logs.length > 100) {
+      this.logs.pop();
+    }
   }
 
   private checkDeviceName(deviceName: string, deviceId: string): boolean {
@@ -98,6 +118,7 @@ export class BluetoothListPage {
     //this.subs.push(
     this.ble.startScan([]).subscribe(device => {
       if (this.checkDeviceName(device.name, device.id)) {
+        this.printLog(device.name, "Add Device to List", device.id);
         this.bluetoothList.push(device);
         if (this.scanTime == 0) {
           this.popupService.makeToast({
@@ -115,7 +136,7 @@ export class BluetoothListPage {
     }
   }
 
-  addDeviceToList(device) {
+  addDeviceToList(device) {    
     this.connectDevices.push({
       name: device.name,
       device: device.id,

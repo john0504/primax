@@ -25,4 +25,7 @@
       <button ion-button color="primary" class="bottom-button full-button" [disabled]="!canContinue" (click)="gotoDevicePage()" full>{{ 'DEVICE_CREATE.CONTINUE' | translate }}</button>
     </div>
   </div>
+  <div *ngIf="isShowLog == 1">
+    <div class="col" *ngFor="let log of logs">{{log}}</div>
+  </div>
 </ion-content>
