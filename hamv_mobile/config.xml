@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.tenx.primax" version="2.1.0 20180605" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.tenx.primax" version="2.1.0 20180608" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Smart Light</name>
     <description>Micro-Vertical Home Automation App developed by Exosite.</description>
     <author email="support@exosite.com">Exosite</author>

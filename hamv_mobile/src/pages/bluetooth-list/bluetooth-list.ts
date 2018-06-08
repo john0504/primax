@@ -87,7 +87,7 @@ export class BluetoothListPage {
       }
       this.startScanning();
     });
-  }  
+  }
 
   private printLog(deviceName, title, msg) {
     const currentDate: Date = new Date();
@@ -101,6 +101,11 @@ export class BluetoothListPage {
   }
 
   private checkDeviceName(deviceName: string, deviceId: string): boolean {
+    this.bluetoothList.forEach(item => {
+      if (item.name == deviceName && item.id == deviceId) {
+        return false;
+      }
+    });
     return deviceName && /*deviceId && deviceId.indexOf("00") != -1 &&*/
       (deviceName.indexOf("AirBox") != -1 ||
         deviceName.indexOf("TlgBox") != -1 ||
@@ -136,7 +141,7 @@ export class BluetoothListPage {
     }
   }
 
-  addDeviceToList(device) {    
+  addDeviceToList(device) {
     this.connectDevices.push({
       name: device.name,
       device: device.id,
